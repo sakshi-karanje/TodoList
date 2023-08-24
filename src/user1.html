@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<style type="text/css">
+*, *:before, *:after {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Nunito', sans-serif;
+  color: #384047;
+}
+
+form {
+  max-width: 300px;
+  margin: 10px auto;
+  padding: 10px 20px;
+  background: #f4f7f8;
+  border-radius: 8px;
+}
+
+h1 {
+  margin: 0 0 30px 0;
+  text-align: center;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="date"],
+input[type="datetime"],
+input[type="email"],
+input[type="number"],
+input[type="search"],
+input[type="tel"],
+input[type="time"],
+input[type="url"],
+textarea,
+select {
+  background: rgba(255,255,255,0.1);
+  border: none;
+  font-size: 16px;
+  height: auto;
+  margin: 0;
+  outline: 0;
+  padding: 15px;
+  width: 100%;
+  background-color: #e8eeef;
+  color: #8a97a0;
+  box-shadow: 0 1px 0 rgba(0,0,0,0.03) inset;
+  margin-bottom: 30px;
+}
+
+input[type="radio"],
+input[type="checkbox"] {
+  margin: 0 4px 8px 0;
+}
+
+select {
+  padding: 6px;
+  height: 32px;
+  border-radius: 2px;
+}
+
+button {
+  padding: 19px 39px 18px 39px;
+  color: #FFF;
+  background-color: #4bc970;
+  font-size: 18px;
+  text-align: center;
+  font-style: normal;
+  border-radius: 5px;
+  width: 100%;
+  border: 1px solid #3ac162;
+  border-width: 1px 1px 3px;
+  box-shadow: 0 -1px 0 rgba(255,255,255,0.1) inset;
+  margin-bottom: 10px;
+}
+
+fieldset {
+  margin-bottom: 30px;
+  border: none;
+}
+
+legend {
+  font-size: 1.4em;
+  margin-bottom: 10px;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+}
+
+label.light {
+  font-weight: 300;
+  display: inline;
+}
+
+.number {
+  background-color: #5fcf80;
+  color: #fff;
+  height: 30px;
+  width: 30px;
+  display: inline-block;
+  font-size: 0.8em;
+  margin-right: 4px;
+  line-height: 30px;
+  text-align: center;
+  text-shadow: 0 1px 0 rgba(255,255,255,0.2);
+  border-radius: 100%;
+}
+
+@media screen and (min-width: 480px) {
+
+  form {
+    max-width: 480px;
+  }
+
+}
+</style>
+ <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Welcome {{uname}}</title>
+        <link rel="stylesheet" href="css/normalize.css">
+        <link href='http://fonts.googleapis.com/css?family=Nunito:400,300' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="css/main.css">
+    </head>
+<body>
+<div style="width: 100%">
+    <div style="float:left; width: 50%">
+<fieldset>
+    <form action="http://{{ip}}:5000/todo" method="get">
+        <h2>Show tasks</h2>
+        <input type="hidden" name="username" value={{uname}}>
+        <button type="submit" name="save" value="save">Show table</button><br><br><br>
+    </form>
+
+
+    <h1>Todo List for {{uname}}</h1>
+<div  class="tbl-header" align="center">
+<table cellpadding="2" cellspacing="10" border="0.001">
+  <thead>
+    <tr>
+
+    <tr>
+      <th>Task ID</th>
+      <th>Task Name</th>
+      <th>Task Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for item in items %}
+    <tr>
+
+        <td>{{item[0]}}</td>
+        <td>{{item[1]}}</td>
+        <td>{{item[2]}}</td>
+
+    </tr>
+{% endfor %}
+
+  </tbody>
+</table>
+</div>
+
+
+    <form action="http://{{ip}}:5000/todo" method="post">
+    <input type="hidden" name="_method" value="post">
+      <h2>New task</h2>
+    <input type="hidden" name="username" value={{uname}}>
+      <input type="text" name="t_name" placeholder="Task Name"/><br>
+      <input type="radio" name="t_status" value="1"/>task is running<br>
+        <input type="radio" name="t_status" value="0">task completed<br>
+        <input type="hidden" name="username" value={{uname}}>
+        <input type="date" name="date">
+
+      <button type="submit" name="save" value="save">Submit</button><br><br>
+    </form>
+    <script type="text/javascript">
+         <!--
+            function sayHello() {
+               alert('task wiil edit if available')
+            }
+         //-->
+         </script>
+<form action="http://{{ip}}:5000/todo" method="post">
+    <input type="hidden" name="username" value={{uname}}>
+    <input type="hidden" name="_method" value="put">
+    <h2>Edit Task</h2>
+    <input type="text" name="tid" placeholder="task ID"><br>
+    <input type="text" name="t_name" placeholder="New Task Name"><br>
+    <input type="text" name="t_status" placeholder="status"><br>
+    <button type="submit" name="save" onsubmit="sayHello()" value="save">submit</button><br><br><br>
+</form>
+
+<form action="http://{{ip}}:5000/todo" method="post">
+    <input type="hidden" name="username" value={{uname}}>
+    <input type="hidden" name="_method" value="delete">
+    <h2>Delete task</h2>
+    <input type="text" name="tid" placeholder="task ID"><br>
+    <button type="submit" name="save" value="save">submit</button><br><br><br>
+</form>
+</fieldset>
+
+        </div>
+    <div style="float: left;">
+
+    </div>
+    </div>
+</body>
+</html>
